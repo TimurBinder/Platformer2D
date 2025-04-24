@@ -3,17 +3,19 @@ using UnityEngine;
 [RequireComponent (typeof(Collider2D))]
 public class GroundChecker : MonoBehaviour
 {
-    public bool HasGround { get; private set; }
+    private int _groundEnterCount = 0;
+
+    public bool HasGround => _groundEnterCount > 0;
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
         if (collider.TryGetComponent<Ground>(out var ground))
-            HasGround = true;
+            _groundEnterCount++;
     }
 
     private void OnTriggerExit2D(Collider2D collider)
     {
         if (collider.TryGetComponent<Ground>(out var ground))
-            HasGround = false;
+            _groundEnterCount--;
     }
 }

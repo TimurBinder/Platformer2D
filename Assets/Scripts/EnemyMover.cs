@@ -15,7 +15,8 @@ public class EnemyMover : CharacterMover
 
     private void Update()
     {
-        Move(GetDirection());
+        float direction = Mathf.Sign(_currentTarget.transform.position.x - transform.position.x);
+        Move(direction);
     }
 
     private void OnTriggerEnter2D(Collider2D collider)
@@ -28,16 +29,5 @@ public class EnemyMover : CharacterMover
     {
         _currentTargetIndex = ++_currentTargetIndex % _targets.Length;
         _currentTarget = _targets[_currentTargetIndex];
-    }
-
-    private int GetDirection()
-    {
-        float direction = _currentTarget.transform.position.x - transform.position.x;
-
-        if (direction > 0)
-            return 1;
-        else if (direction < 0) 
-            return -1;
-        else return 0;
     }
 }
