@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class CharacterRotater : MonoBehaviour
 {
-    public void SetDirection(float direction)
+    public void Rotate(float direction)
     {
         float turnAngle = 180.0f;
 

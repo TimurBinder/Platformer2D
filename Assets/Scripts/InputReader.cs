@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class InputReader : MonoBehaviour
 {
-    private const  KeyCode JumpKey = KeyCode.UpArrow;
+    private const KeyCode JumpKey = KeyCode.UpArrow;
     private const string Horizontal = nameof(Horizontal);
 
     public event Action JumpInputReading;

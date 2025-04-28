@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent (typeof(Animator))]
 public class CharacterAnimator : MonoBehaviour
 {
     public static readonly int Speed = Animator.StringToHash(nameof(Speed));
