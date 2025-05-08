@@ -1,0 +1,33 @@
+using UnityEngine;
+
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(CharacterAnimator))]
+public class CharacterMover : MonoBehaviour
+{
+    [SerializeField] private float _speed;
+    [SerializeField] private float _jumpForce;
+    [SerializeField] private GroundChecker _groundChecker;
+
+    private CharacterAnimator _animator;
+    private Rigidbody2D _rigidbody;
+
+    private void Awake()
+    {
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _animator = GetComponent<CharacterAnimator>();
+    }
+
+    public void Move(float direction)
+    {
+        direction = Mathf.Abs(direction);
+        float distance = direction * _speed * Time.deltaTime;
+        transform.Translate(Vector2.right * distance);
+        _animator.Move(direction);
+    }
+
+    public void Jump()
+    {
+        if (_groundChecker.HasGround)
+            _rigidbody.AddForce(Vector2.up * _jumpForce, ForceMode2D.Impulse);
+    }
+}

@@ -1,47 +1,94 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterMover))]
 [RequireComponent(typeof(CharacterRotater))]
-public class Enemy : MonoBehaviour
+[RequireComponent(typeof(EnemyCollisionHandler))]
+[RequireComponent(typeof(TargetIdentifier))]
+[RequireComponent(typeof(Attacker))]
+public class Enemy : Character
 {
-    [SerializeField] private TargetPoint[] _targets;
+    [SerializeField] float _attackDelay = 2f;
 
-    private int _currentTargetIndex;
     private CharacterMover _mover;
     private CharacterRotater _rotater;
     private EnemyCollisionHandler _colissionHandler;
+    private TargetIdentifier _targetIdentifier;
+    private Attacker _attacker;
+    private Transform _currentTargetTransform;
+    private WaitForSeconds _attackWait;
+    private IEnumerator _attackCoroutine;
+    private bool _isAttacking;
 
-    public TargetPoint CurrentTarget { get; private set; }
-
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
         _mover = GetComponent<CharacterMover>();
         _rotater = GetComponent<CharacterRotater>();
+        _targetIdentifier = GetComponent<TargetIdentifier>();
         _colissionHandler = GetComponent<EnemyCollisionHandler>();
+        _attacker = GetComponent<Attacker>();
+        _attackWait = new WaitForSeconds(_attackDelay);
     }
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
-        _currentTargetIndex = 0;
-        CurrentTarget = _targets[_currentTargetIndex];
-        _colissionHandler.TargetEntered += SwitchTarget;
+        base.OnEnable();
+        _targetIdentifier.TargetChanged += SetTarget;
+        _colissionHandler.DamageableEntered += StartAttackTarget;
+        _colissionHandler.DamageableExited += StopAttackTarget;
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
-        _colissionHandler.TargetEntered -= SwitchTarget;
+        base.OnDisable();
+        _targetIdentifier.TargetChanged -= SetTarget; 
+        _colissionHandler.DamageableEntered -= StartAttackTarget;
+        _colissionHandler.DamageableExited -= StopAttackTarget;
     }
 
     private void Update()
     {
-        float direction = Mathf.Sign(CurrentTarget.transform.position.x - transform.position.x);
+        float direction = 0;
+
+        if (_isAttacking == false)
+            direction = Mathf.Sign(_currentTargetTransform.position.x - transform.position.x);
+
         _mover.Move(direction);
+        float rotation = _currentTargetTransform.position.x - transform.position.x;
+        _rotater.Rotate(rotation);
     }
 
-    public void SwitchTarget()
+    private void SetTarget(Transform targetTransform)
     {
-        _currentTargetIndex = ++_currentTargetIndex % _targets.Length;
-        CurrentTarget = _targets[_currentTargetIndex];
-        _rotater.Rotate(CurrentTarget.transform.position.x - transform.position.x);
+        _currentTargetTransform = targetTransform;
+    }
+
+    private void StartAttackTarget(Damageable damageable)
+    {
+        if (damageable == _targetIdentifier.AttackTarget)
+        {
+            _attackCoroutine = Attacking(damageable);
+            StartCoroutine(_attackCoroutine);
+            _isAttacking = true;
+        }
+    }
+
+    private void StopAttackTarget(Damageable damageable)
+    {
+        if (_isAttacking && damageable == _targetIdentifier.AttackTarget)
+        {
+            StopCoroutine(_attackCoroutine);
+            _isAttacking = false;
+        }
+    }
+
+    private IEnumerator Attacking(Damageable damageable) 
+    {
+        while (enabled)
+        {
+            _attacker.Attack();
+            yield return _attackWait;
+        }
     }
 }

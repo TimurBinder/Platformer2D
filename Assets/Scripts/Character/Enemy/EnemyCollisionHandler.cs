@@ -1,21 +1,27 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Enemy))]
 public class EnemyCollisionHandler : MonoBehaviour
 {
-    private Enemy _enemy;
+    public event Action<TargetPoint> TargetEntered;
+    public event Action<Damageable> DamageableEntered;
+    public event Action<Damageable> DamageableExited;
 
-    public event Action TargetEntered;
-
-    private void Awake()
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        _enemy = GetComponent<Enemy>();
+        if (collision.TryGetComponent<TargetPoint>(out TargetPoint targetPoint))
+            TargetEntered.Invoke(targetPoint);
     }
 
-    private void OnTriggerEnter2D(Collider2D collider)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collider == _enemy.CurrentTarget.Collider)
-            TargetEntered?.Invoke();    
+        if (collision.gameObject.TryGetComponent<Damageable>(out Damageable damageable))
+            DamageableEntered?.Invoke(damageable);
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.TryGetComponent<Damageable>(out Damageable damageable))
+            DamageableExited?.Invoke(damageable);
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -8,6 +9,7 @@ public class CoinSpawner : MonoBehaviour
     [SerializeField] private float _repeatRate;
 
     private ObjectPool<Coin> _pool;
+    private WaitForSeconds _wait;
 
     private void Awake()
     {
@@ -21,8 +23,10 @@ public class CoinSpawner : MonoBehaviour
             defaultCapacity: _startPoints.Length
         );
 
+        _wait = new WaitForSeconds(_repeatRate);
+
         for (int i = 0; i < _startPoints.Length; i++)
-            GetCoin();
+            _pool.Get();
     }
 
     private void OnActionGet(Coin coin)
@@ -35,11 +39,12 @@ public class CoinSpawner : MonoBehaviour
     {
         coin.Collected -= _pool.Release;
         coin.gameObject.SetActive(false);
-        Invoke(nameof(GetCoin), _repeatRate);
+        StartCoroutine(GetCoin());
     }
 
-    private void GetCoin()
+    private IEnumerator GetCoin()
     {
+        yield return _wait;
         _pool.Get();
     }
 }
