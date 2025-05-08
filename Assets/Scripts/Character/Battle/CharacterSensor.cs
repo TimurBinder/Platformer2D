@@ -19,11 +19,6 @@ public class CharacterSensor : MonoBehaviour
 
         RaycastHit2D hit = Physics2D.Raycast(_collider.bounds.center, direction, raycastDistance);
 
-        if (name == "Player")
-        {
-            Debug.Log(direction);
-        }
-
         if (hit.collider == null)
         {
             damageable = null;
