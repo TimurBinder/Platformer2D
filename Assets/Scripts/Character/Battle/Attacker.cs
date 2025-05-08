@@ -29,15 +29,15 @@ public class Attacker : MonoBehaviour
             return;
 
         _animator.Attack();
-        _animator.AttackEnding += AttackCollision;
+        _animator.AttackEnding += CauseDamage;
     }
 
-    private void AttackCollision()
+    private void CauseDamage()
     {
         if (_sensor.TryGetDamageable(_distance, out Damageable damageable))
             damageable.TakeDamage(_damage);
 
-        _animator.AttackEnding -= AttackCollision;
+        _animator.AttackEnding -= CauseDamage;
         _delayTimer = 0;
     }
 }
