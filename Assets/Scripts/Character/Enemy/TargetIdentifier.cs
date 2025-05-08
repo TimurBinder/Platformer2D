@@ -12,9 +12,9 @@ public class TargetIdentifier : MonoBehaviour
 
     private int _currentTargetIndex;
     private bool _isPersecution;
+    private float _persecutionTimer;
     private CharacterSensor _sensor;
     private EnemyCollisionHandler _collisionHandler;
-    private float _persecutionTimer;
 
     public event Action<Transform> TargetChanged;
 
@@ -30,10 +30,14 @@ public class TargetIdentifier : MonoBehaviour
 
     private void OnEnable()
     {
+        _collisionHandler.TargetEntered += SwitchTarget;
+    }
+
+    private void Start()
+    {
         _currentTargetIndex = 0;
         CurrentTarget = _targets[_currentTargetIndex];
         TargetChanged?.Invoke(CurrentTarget.transform);
-        _collisionHandler.TargetEntered += SwitchTarget;
     }
 
     private void OnDisable()
