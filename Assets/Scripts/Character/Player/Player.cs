@@ -5,14 +5,14 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterRotater))]
 [RequireComponent(typeof(InputReader))]
 [RequireComponent (typeof(Attacker))]
-[RequireComponent(typeof(HealthKitCollector))]
+[RequireComponent(typeof(Collector))]
 public class Player : Character
 {
     private CharacterMover _mover;
     private CharacterRotater _rotater;
     private Attacker _attacker;
     private InputReader _inputReader;
-    private HealthKitCollector _healthCollector;
+    private Collector _collector;
 
     public event Action Died;
 
@@ -23,7 +23,7 @@ public class Player : Character
         _rotater = GetComponent<CharacterRotater>();
         _inputReader = GetComponent<InputReader>();
         _attacker = GetComponent<Attacker>();
-        _healthCollector = GetComponent<HealthKitCollector>();
+        _collector = GetComponent<Collector>();
     }
     protected override void OnEnable()
     {
@@ -32,7 +32,7 @@ public class Player : Character
         _inputReader.HorizontalInputReading += _mover.Move;
         _inputReader.HorizontalInputReading += _rotater.Rotate;
         _inputReader.AttackInputReading += _attacker.Attack;
-        _healthCollector.HealthKitCollected += AddHealth;
+        _collector.HealthKitCollected += AddHealth;
     }
 
     protected override void OnDisable()
@@ -42,7 +42,7 @@ public class Player : Character
         _inputReader.HorizontalInputReading -= _mover.Move;
         _inputReader.HorizontalInputReading -= _rotater.Rotate;
         _inputReader.AttackInputReading -= _attacker.Attack;
-        _healthCollector.HealthKitCollected -= AddHealth;
+        _collector.HealthKitCollected -= AddHealth;
     }
 
     private void OnDestroy()

@@ -5,31 +5,27 @@ using UnityEngine;
 public class Attacker : MonoBehaviour
 {
     [SerializeField] private float _damage;
-    [SerializeField] private float _delay = 0.5f;
     [SerializeField] private float _distance = 2.5f;
 
     private CharacterAnimator _animator;
     private CharacterSensor _sensor;
-    private float _delayTimer;
+    private bool _canAttack;
 
     private void Awake()
     {
         _animator = GetComponent<CharacterAnimator>();
         _sensor = GetComponent<CharacterSensor>();
-    }
-
-    public void Update()
-    {
-        _delayTimer += Time.deltaTime;
+        _canAttack = true;
     }
 
     public void Attack()
     {
-        if (_delayTimer < _delay)
-            return;
-
-        _animator.Attack();
-        _animator.AttackEnding += CauseDamage;
+        if (_canAttack)
+        {
+            _canAttack = false;
+            _animator.Attack();
+            _animator.AttackEnding += CauseDamage;
+        }
     }
 
     private void CauseDamage()
@@ -38,6 +34,6 @@ public class Attacker : MonoBehaviour
             damageable.TakeDamage(_damage);
 
         _animator.AttackEnding -= CauseDamage;
-        _delayTimer = 0;
+        _canAttack = true;
     }
 }

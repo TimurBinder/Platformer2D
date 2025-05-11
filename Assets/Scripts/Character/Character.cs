@@ -5,7 +5,7 @@ public class Character : MonoBehaviour
 {
     [SerializeField] private float _health;
 
-    protected Damageable _damageable;
+    protected Damageable Damageable;
 
     public float MaxHealth => _health;
     public float Health { get; protected set; }
@@ -14,17 +14,17 @@ public class Character : MonoBehaviour
     protected virtual void Awake()
     {
         Health = MaxHealth;
-        _damageable = GetComponent<Damageable>();
+        Damageable = GetComponent<Damageable>();
     }
 
     protected virtual void OnEnable()
     {
-        _damageable.TakedDamage += ReduceHealth;
+        Damageable.TakedDamage += ReduceHealth;
     }
 
     protected virtual void OnDisable()
     {
-        _damageable.TakedDamage -= ReduceHealth;
+        Damageable.TakedDamage -= ReduceHealth;
     }
 
     private void ReduceHealth(float health)
