@@ -10,7 +10,7 @@ public class EnemyCollisionHandler : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.TryGetComponent<TargetPoint>(out TargetPoint targetPoint))
-            TargetEntered.Invoke(targetPoint);
+            TargetEntered?.Invoke(targetPoint);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)

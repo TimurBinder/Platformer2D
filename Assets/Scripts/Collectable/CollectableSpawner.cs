@@ -18,7 +18,7 @@ abstract public class CollectableSpawner : MonoBehaviour
             createFunc: () => OnActionCreate(),
             actionOnGet: (obj) => OnActionGet(obj),
             actionOnRelease: (obj) => OnActionRelease(obj),
-            actionOnDestroy: (obj) => Destroy(obj),
+            actionOnDestroy: (obj) => Destroy(obj.gameObject),
             collectionCheck: true,
             maxSize: MaxSize,
             defaultCapacity: DefaultCapacity

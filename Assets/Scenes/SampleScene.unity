@@ -803,7 +803,7 @@ Transform:
   m_GameObject: {fileID: 741422506}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.6155515, y: 2.0706887, z: 0.15215608}
+  m_LocalPosition: {x: -0.6155515, y: 2.03, z: 0.15215608}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1610,6 +1610,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1841378995329977624, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
+      propertyPath: _sensorDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1841378995329977624, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
+      propertyPath: _persecutionDuration
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 2969093638957537068, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
       propertyPath: _attackTarget
       value: 
@@ -1628,9 +1636,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3196273557348413919, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
       propertyPath: _distance
-      value: 2.5
+      value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 4646445263621614969, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
+      propertyPath: _targets.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4646445263621614969, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
+      propertyPath: '_targets.Array.data[0]'
+      value: 
+      objectReference: {fileID: 251056490}
+    - target: {fileID: 4646445263621614969, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
+      propertyPath: '_targets.Array.data[1]'
+      value: 
+      objectReference: {fileID: 48797093}
+    m_RemovedComponents:
+    - {fileID: 2969093638957537068, guid: 2e2183501755a214591e802f3aff33d2, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -2421,9 +2442,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4304915200501690699, guid: 3248535f6a2562c489a1223a75951ef2, type: 3}
       propertyPath: _distance
-      value: 2.5
+      value: 2
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 5119211773016190106, guid: 3248535f6a2562c489a1223a75951ef2, type: 3}
+      propertyPath: _sensorDistance
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5119211773016190106, guid: 3248535f6a2562c489a1223a75951ef2, type: 3}
+      propertyPath: _persecutionDuration
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494894691466576982, guid: 3248535f6a2562c489a1223a75951ef2, type: 3}
+      propertyPath: _targets.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6494894691466576982, guid: 3248535f6a2562c489a1223a75951ef2, type: 3}
+      propertyPath: '_targets.Array.data[0]'
+      value: 
+      objectReference: {fileID: 50822917}
+    - target: {fileID: 6494894691466576982, guid: 3248535f6a2562c489a1223a75951ef2, type: 3}
+      propertyPath: '_targets.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1680598316}
+    m_RemovedComponents:
+    - {fileID: 1972018302457875091, guid: 3248535f6a2562c489a1223a75951ef2, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

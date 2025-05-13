@@ -15,12 +15,15 @@ public class CoinSpawner : CollectableSpawner
         base.Awake();
 
         for (int i = 0; i < _startPoints.Length; i++)
-            Pool.Get();
+        {
+            Collectable coin = Pool.Get();
+            coin.transform.position = _startPoints[i].position;
+        }
     }
 
     protected override Collectable OnActionCreate()
     {
-        return Instantiate(Prefab, _startPoints[Pool.CountActive].position, Quaternion.identity);
+        return Instantiate(Prefab);
     }
 
     protected override void OnActionRelease(Collectable coin)

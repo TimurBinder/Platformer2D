@@ -20,8 +20,9 @@ GameObject:
   - component: {fileID: 4010603599596522288}
   - component: {fileID: 194749588777109573}
   - component: {fileID: 7554886043343248884}
-  - component: {fileID: 2969093638957537068}
   - component: {fileID: 3196273557348413919}
+  - component: {fileID: 4646445263621614969}
+  - component: {fileID: 1841378995329977624}
   m_Layer: 0
   m_Name: LightBandit
   m_TagString: Player
@@ -275,24 +276,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a307ddba166f08348b4c6387aef11a31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2969093638957537068
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1689866831511430}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54b53237440631d40a888fb1501a5d8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sensorDistance: 50
-  _persecutionDuration: 5
-  _targets:
-  - {fileID: 0}
-  - {fileID: 0}
-  _attackTarget: {fileID: 0}
 --- !u!114 &3196273557348413919
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -306,8 +289,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 25
-  _delay: 0.6
   _distance: 2.5
+--- !u!114 &4646445263621614969
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1689866831511430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78fb080620b19c4792442e2ce1fb768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targets: []
+--- !u!114 &1841378995329977624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1689866831511430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baaaa4e98edec634ba4942dc81f4df09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sensorDistance: 5
+  _persecutionDuration: 5
 --- !u!1 &1943394156383696
 GameObject:
   m_ObjectHideFlags: 0

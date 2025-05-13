@@ -111,8 +111,9 @@ GameObject:
   - component: {fileID: 445271112090720558}
   - component: {fileID: 1538309784555397672}
   - component: {fileID: 3420353149322384824}
-  - component: {fileID: 1972018302457875091}
   - component: {fileID: 4304915200501690699}
+  - component: {fileID: 6494894691466576982}
+  - component: {fileID: 5119211773016190106}
   m_Layer: 0
   m_Name: HeavyBandit
   m_TagString: Player
@@ -366,24 +367,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a307ddba166f08348b4c6387aef11a31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1972018302457875091
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1463392086428580}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 54b53237440631d40a888fb1501a5d8d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _sensorDistance: 5
-  _persecutionDuration: 5
-  _targets:
-  - {fileID: 0}
-  - {fileID: 0}
-  _attackTarget: {fileID: 0}
 --- !u!114 &4304915200501690699
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -397,5 +380,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damage: 40
-  _delay: 0.8
   _distance: 2.5
+--- !u!114 &6494894691466576982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463392086428580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b78fb080620b19c4792442e2ce1fb768, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targets: []
+--- !u!114 &5119211773016190106
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1463392086428580}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: baaaa4e98edec634ba4942dc81f4df09, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _sensorDistance: 5
+  _persecutionDuration: 5

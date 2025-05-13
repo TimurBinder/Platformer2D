@@ -4,7 +4,8 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterMover))]
 [RequireComponent(typeof(CharacterRotater))]
 [RequireComponent(typeof(EnemyCollisionHandler))]
-[RequireComponent(typeof(TargetIdentifier))]
+[RequireComponent(typeof(PatrolTargetIdentifier))]
+[RequireComponent(typeof(PersecutionTargetIdentifier))]
 [RequireComponent(typeof(Attacker))]
 public class Enemy : Character
 {
@@ -13,7 +14,8 @@ public class Enemy : Character
     private CharacterMover _mover;
     private CharacterRotater _rotater;
     private EnemyCollisionHandler _colissionHandler;
-    private TargetIdentifier _targetIdentifier;
+    private PatrolTargetIdentifier _patrulTargetIdentifier;
+    private PersecutionTargetIdentifier _persecutionTargetIdentifier;
     private Attacker _attacker;
     private Transform _currentTargetTransform;
     private WaitForSeconds _attackWait;
@@ -25,24 +27,30 @@ public class Enemy : Character
         base.Awake();
         _mover = GetComponent<CharacterMover>();
         _rotater = GetComponent<CharacterRotater>();
-        _targetIdentifier = GetComponent<TargetIdentifier>();
         _colissionHandler = GetComponent<EnemyCollisionHandler>();
         _attacker = GetComponent<Attacker>();
+        _patrulTargetIdentifier = GetComponent<PatrolTargetIdentifier>();
+        _persecutionTargetIdentifier = GetComponent<PersecutionTargetIdentifier>();
         _attackWait = new WaitForSeconds(_attackDelay);
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        _targetIdentifier.TargetChanged += SetTarget;
+        _patrulTargetIdentifier.TargetChanged += SetTarget;
+        _persecutionTargetIdentifier.PersecutionStarted += StartPersecuting;
+        _persecutionTargetIdentifier.PersecutionStoped += StopPersecuting;
         _colissionHandler.DamageableEntered += StartAttackTarget;
         _colissionHandler.DamageableExited += StopAttackTarget;
+        _currentTargetTransform = _patrulTargetIdentifier.CurrentTarget.transform;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        _targetIdentifier.TargetChanged -= SetTarget; 
+        _patrulTargetIdentifier.TargetChanged -= SetTarget;
+        _persecutionTargetIdentifier.PersecutionStarted -= StartPersecuting;
+        _persecutionTargetIdentifier.PersecutionStoped -= StopPersecuting;
         _colissionHandler.DamageableEntered -= StartAttackTarget;
         _colissionHandler.DamageableExited -= StopAttackTarget;
     }
@@ -64,11 +72,24 @@ public class Enemy : Character
         _currentTargetTransform = targetTransform;
     }
 
+    private void StartPersecuting(Damageable damageable)
+    {
+        _currentTargetTransform = damageable.transform;
+        _patrulTargetIdentifier.TargetChanged -= SetTarget;
+    }
+
+    private void StopPersecuting()
+    {
+        _patrulTargetIdentifier.enabled = true;
+        _patrulTargetIdentifier.TargetChanged += SetTarget;
+        _currentTargetTransform = _patrulTargetIdentifier.CurrentTarget.transform;
+    }
+
     private void StartAttackTarget(Damageable damageable)
     {
-        if (damageable == _targetIdentifier.AttackTarget)
+        if (damageable == _persecutionTargetIdentifier.Target)
         {
-            _attackCoroutine = Attacking(damageable);
+            _attackCoroutine = Attacking();
             StartCoroutine(_attackCoroutine);
             _isAttacking = true;
         }
@@ -76,14 +97,11 @@ public class Enemy : Character
 
     private void StopAttackTarget(Damageable damageable)
     {
-        if (_isAttacking && damageable == _targetIdentifier.AttackTarget)
-        {
-            StopCoroutine(_attackCoroutine);
-            _isAttacking = false;
-        }
+        StopCoroutine(_attackCoroutine);
+        _isAttacking = false;
     }
 
-    private IEnumerator Attacking(Damageable damageable) 
+    private IEnumerator Attacking() 
     {
         while (enabled)
         {
