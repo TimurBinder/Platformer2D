@@ -22,9 +22,8 @@ public class Enemy : Character
     private IEnumerator _attackCoroutine;
     private bool _isAttacking;
 
-    protected override void Awake()
+    private void Awake()
     {
-        base.Awake();
         _mover = GetComponent<CharacterMover>();
         _rotater = GetComponent<CharacterRotater>();
         _colissionHandler = GetComponent<EnemyCollisionHandler>();
@@ -34,9 +33,8 @@ public class Enemy : Character
         _attackWait = new WaitForSeconds(_attackDelay);
     }
 
-    protected override void OnEnable()
+    private void OnEnable()
     {
-        base.OnEnable();
         _patrulTargetIdentifier.TargetChanged += SetTarget;
         _persecutionTargetIdentifier.PersecutionStarted += StartPersecuting;
         _persecutionTargetIdentifier.PersecutionStoped += StopPersecuting;
@@ -45,9 +43,8 @@ public class Enemy : Character
         _currentTargetTransform = _patrulTargetIdentifier.CurrentTarget.transform;
     }
 
-    protected override void OnDisable()
+    private void OnDisable()
     {
-        base.OnDisable();
         _patrulTargetIdentifier.TargetChanged -= SetTarget;
         _persecutionTargetIdentifier.PersecutionStarted -= StartPersecuting;
         _persecutionTargetIdentifier.PersecutionStoped -= StopPersecuting;
