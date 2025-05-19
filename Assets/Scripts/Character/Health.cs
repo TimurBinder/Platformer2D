@@ -15,6 +15,9 @@ public class Health : MonoBehaviour
 
     public void Reduce(float health)
     {
+        if (health < 0)
+            return;
+
         Value -= health;
 
         if (IsAlive == false)
@@ -23,6 +26,9 @@ public class Health : MonoBehaviour
 
     public void Add(float health)
     {
+        if (health < 0)
+            return;
+
         Value += health;
 
         if (Value > MaxValue)
