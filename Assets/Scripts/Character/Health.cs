@@ -1,14 +1,18 @@
+using System;
 using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    [SerializeField] private float _health;
+    [SerializeField] private float _value;
 
-    public float MaxValue => _health;
+    public float MaxValue => _value;
     public float Value { get; private set; }    
     public bool IsAlive => Value > 0;
 
-    protected virtual void Awake()
+    public event Action Changed;
+    public event Action Overed;
+
+    private void Awake()
     {
         Value = MaxValue;
     }
@@ -20,8 +24,13 @@ public class Health : MonoBehaviour
 
         Value -= health;
 
+        if (Value < 0)
+            Value = 0;
+
+        Changed?.Invoke();
+
         if (IsAlive == false)
-            Destroy(gameObject);
+            Overed?.Invoke();
     }
 
     public void Add(float health)
@@ -33,5 +42,7 @@ public class Health : MonoBehaviour
 
         if (Value > MaxValue)
             Value = MaxValue;
+
+        Changed?.Invoke();
     }
 }

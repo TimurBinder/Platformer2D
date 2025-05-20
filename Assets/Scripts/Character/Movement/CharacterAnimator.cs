@@ -12,6 +12,7 @@ public class CharacterAnimator : MonoBehaviour
     private Animator _animator;
 
     public event Action AttackEnding;
+    public event Action TakeDamageEnded;
 
     private void Awake()
     {
@@ -37,4 +38,9 @@ public class CharacterAnimator : MonoBehaviour
     {
         _animator.SetTrigger(TakingDamage);
     }
+
+    public void EndTakeDamage()
+    {
+        TakeDamageEnded?.Invoke();
+    }   
 }

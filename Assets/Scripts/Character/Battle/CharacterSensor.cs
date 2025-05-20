@@ -3,6 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class CharacterSensor : MonoBehaviour
 {
+    [SerializeField] private CharacterRenderer _renderer;
+
     private Collider2D _collider;
 
     private void Awake()
@@ -14,7 +16,7 @@ public class CharacterSensor : MonoBehaviour
     {
         Vector2 direction = Vector2.right;
 
-        if (transform.rotation.eulerAngles.y != 0)
+        if (_renderer.transform.rotation.eulerAngles.y != 0)
             direction = Vector2.left;
 
         RaycastHit2D hit = Physics2D.Raycast(_collider.bounds.center, direction, raycastDistance);
