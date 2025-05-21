@@ -94,7 +94,9 @@ public class Enemy : Character
 
     private void StopAttackTarget(Damageable damageable)
     {
-        StopCoroutine(_attackCoroutine);
+        if (_attackCoroutine != null)
+            StopCoroutine(_attackCoroutine);
+
         _isAttacking = false;
     }
 

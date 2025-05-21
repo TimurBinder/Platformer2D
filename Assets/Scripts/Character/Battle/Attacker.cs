@@ -18,12 +18,12 @@ public class Attacker : MonoBehaviour
 
     private void OnEnable()
     {
-        _animator.TakeDamageEnded += AllowAttack;
+        _animator.TakeDamageEnding += AllowAttack;
     }
 
     private void OnDisable()
     {
-        _animator.TakeDamageEnded -= AllowAttack;
+        _animator.TakeDamageEnding -= AllowAttack;
     }
 
     public void Attack()

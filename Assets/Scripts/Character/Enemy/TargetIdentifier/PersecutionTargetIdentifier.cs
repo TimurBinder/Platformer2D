@@ -23,33 +23,37 @@ public class PersecutionTargetIdentifier : MonoBehaviour
 
     private void Update()
     {
-        if (TryStartPersecution() == false && _isPersecuting)
+        if (TryGetTarget(out Damageable target))
+        {
+            if (_isPersecuting)
+                _persecutionTimer = 0;
+            else
+                StartPersecution(target);
+        }
+        else if (_isPersecuting)
         {
             _persecutionTimer += Time.deltaTime;
-            TryStopPersecution();
+
+            if (_persecutionTimer >= _persecutionDuration)
+                StopPersecution();
         }
     }
 
-    private bool TryStartPersecution()
+    private void StartPersecution(Damageable target)
     {
-        if (TryGetTarget(out Damageable target) == false)
-            return false;
-
         PersecutionStarted?.Invoke(target);
         Target = target;
+        Target.Died += StopPersecution;
         _isPersecuting = true;
         _persecutionTimer = 0;
-        return true;
     }
 
-    private void TryStopPersecution()
+    private void StopPersecution()
     {
-        if (_persecutionTimer >= _persecutionDuration)
-        {
-            _isPersecuting = false;
-            PersecutionStoped?.Invoke();
-            Target = null;
-        }
+        _isPersecuting = false;
+        PersecutionStoped?.Invoke();
+        Target.Died -= StopPersecution;
+        Target = null;
     }
 
     private bool TryGetTarget(out Damageable target)

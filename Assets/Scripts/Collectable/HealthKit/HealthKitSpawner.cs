@@ -23,7 +23,9 @@ public class HealthKitSpawner : CollectableSpawner
 
     private void OnEnable()
     {
-        StartCoroutine(_coroutine);
+        if (_coroutine != null)
+            StartCoroutine(_coroutine);
+
         _isRunningCoroutine = true;
     }
 

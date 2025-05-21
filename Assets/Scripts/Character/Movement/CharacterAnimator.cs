@@ -12,7 +12,7 @@ public class CharacterAnimator : MonoBehaviour
     private Animator _animator;
 
     public event Action AttackEnding;
-    public event Action TakeDamageEnded;
+    public event Action TakeDamageEnding;
 
     private void Awake()
     {
@@ -41,6 +41,11 @@ public class CharacterAnimator : MonoBehaviour
 
     public void EndTakeDamage()
     {
-        TakeDamageEnded?.Invoke();
-    }   
+        TakeDamageEnding?.Invoke();
+    }
+
+    public void Die()
+    {
+        _animator.SetBool(IsAlive, false);
+    }
 }
