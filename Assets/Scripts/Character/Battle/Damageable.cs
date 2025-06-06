@@ -35,13 +35,17 @@ public class Damageable : MonoBehaviour
         _health.Overed -= Die;
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, bool isStunning=true)
     {
         TakedDamage?.Invoke(damage);
         _health.Reduce(damage);
+        _animator.TakeDamage();
 
-        if (_health.IsAlive)
-            _animator.TakeDamage();
+        if (isStunning)
+        {
+            if (_health.IsAlive)
+                _animator.TakeStunningDamage();
+        }
     }
 
     private void Die()

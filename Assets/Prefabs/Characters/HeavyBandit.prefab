@@ -150,6 +150,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _animator: {fileID: 162633900656771338}
+  _collider: {fileID: 0}
 --- !u!50 &50959880312528810
 Rigidbody2D:
   serializedVersion: 5
@@ -281,6 +282,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _renderer: {fileID: 4647043482643963451}
+  _collider: {fileID: 0}
 --- !u!114 &4304915200501690699
 MonoBehaviour:
   m_ObjectHideFlags: 0

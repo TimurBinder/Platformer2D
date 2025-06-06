@@ -6,6 +6,7 @@ public class CharacterAnimator : MonoBehaviour
 {
     public static readonly int Speed = Animator.StringToHash(nameof(Speed));
     public static readonly int Attacking = Animator.StringToHash(nameof(Attacking));
+    public static readonly int TakingStunningDamage = Animator.StringToHash(nameof(TakingStunningDamage));
     public static readonly int TakingDamage = Animator.StringToHash(nameof(TakingDamage));
     public static readonly int IsAlive = Animator.StringToHash(nameof(IsAlive));
 
@@ -32,6 +33,11 @@ public class CharacterAnimator : MonoBehaviour
     public void EndAttack()
     {
         AttackEnding?.Invoke();
+    }
+
+    public void TakeStunningDamage()
+    {
+        _animator.SetTrigger(TakingStunningDamage);
     }
 
     public void TakeDamage()
